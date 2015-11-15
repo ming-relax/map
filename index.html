@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Startup maps</title>
+
+    <link rel="stylesheet" href="bootstrap-3.3.5-dist/css/bootstrap.min.css" media="screen">
+    <link rel="stylesheet" href="app.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="style.css" media="screen" title="no title" charset="utf-8">
+    <script src="jquery-2.1.4.min.js" charset="utf-8"></script>
+    <script src="knockout-3.3.0.js" charset="utf-8"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row" id="search-bar">
+        <div class="input-group input-group-lg">
+          <span class="input-group-addon" id="basic-addon1">Search</span>
+          <input type="text" id="search-input" class="form-control" data-bind="textInput: keyWord">
+        </div>
+      </div>
+      <div class="row" id="main">
+        <div class="col-md-3" id="location-list">
+          <ul class="list-group">
+            <li id="location" class="list-group-item"><span>Key Locations</span></li>
+            <!-- ko foreach: filteredLocations -->
+            <li id="location" class="list-group-item"><span data-bind="text: $data.name"></span></li>
+            <!-- /ko -->
+          </ul>
+        </div>
+        <div class="col-md-9" id="map">
+        </div>
+      </div>
+    </div>
+    <script src="app.js" charset="utf-8"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCnNSswNQ9NJJ1p7KqjyY6N4cmk-FsVOxw&callback=initMap"></script>
+  </body>
+</html>

@@ -1,0 +1,33 @@
+html, body {
+  height: 100%;
+}
+
+
+.container {
+  height: 100%;
+}
+
+#search-bar {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+/* list of search results and the map*/
+#main {
+  height: 90%;
+}
+#map {
+  height: 100%;
+}
+
+ul {
+  list-style-type: none;
+}
+
+li {
+  width: 100%;
+  background:
+}
+
+li:first-child {
+  background-color: #eee;
+}
