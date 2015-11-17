@@ -21,11 +21,10 @@
       </div>
       <div class="row" id="main">
         <div class="col-md-3" id="location-list">
-          <ul class="list-group">
-            <li id="location" class="list-group-item"><span>Key Locations</span></li>
-            <!-- ko foreach: filteredLocations -->
-            <li id="location" class="list-group-item"><span data-bind="text: $data.name"></span></li>
-            <!-- /ko -->
+          <ul class="list-group" data-bind="foreach: filteredCompanies">
+            <li id="location" data-bind="click: $parent.select, css: {selected : isSelected, 'list-group-item': true}">
+              <span data-bind="text: $data.name"></span>
+            </li>
           </ul>
         </div>
         <div class="col-md-9" id="map">

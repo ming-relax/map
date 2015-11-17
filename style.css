@@ -25,9 +25,8 @@ ul {
 
 li {
   width: 100%;
-  background:
 }
 
-li:first-child {
-  background-color: #eee;
+.selected {
+  background-color: red;
 }
