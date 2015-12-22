@@ -32,34 +32,47 @@ function CompanyViewModel(company) {
     title: company.name
   });
 
-  var contentString = '<div id="content">'+
-  '<div id="siteNotice">'+
-  '</div>'+
-  '<h1 id="firstHeading" class="firstHeading">Uluru</h1>'+
-  '<div id="bodyContent">'+
-  '<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
-  'sandstone rock formation in the southern part of the '+
-  'Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi) '+
-  'south west of the nearest large town, Alice Springs; 450&#160;km '+
-  '(280&#160;mi) by road. Kata Tjuta and Uluru are the two major '+
-  'features of the Uluru - Kata Tjuta National Park. Uluru is '+
-  'sacred to the Pitjantjatjara and Yankunytjatjara, the '+
-  'Aboriginal people of the area. It has many springs, waterholes, '+
-  'rock caves and ancient paintings. Uluru is listed as a World '+
-  'Heritage Site.</p>'+
-  '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">'+
-  'https://en.wikipedia.org/w/index.php?title=Uluru</a> '+
-  '(last visited June 22, 2009).</p>'+
-  '</div>'+
-  '</div>';
+  $.ajax( {
+    url: "https://en.wikipedia.org/w/api.php",
+    data: {
+      action: "query", 
+      titles: self.name, 
+      prop: "revisions|categories", 
+      rvprop: "content",
+      list: "categorymembers",
+      cmtitle: "Category:Company",
+      format: "json"
+    },
+    dataType: 'jsonp',
+    type: 'GET',
+    headers: { 'Api-User-Agent': 'Example/1.0' },
+    success: function(data) {
+       $.ajax({
+        url: "https://en.wikipedia.org/w/api.php",
+        data: {
+          action: "parse",
+          pageid: Object.keys(data.query.pages)[0],
+          contentmodel: "wikitext",
+          prop: "text",
+          disableeditsection: true,
+          noimages: true,
+          mobileformat: true,
+          format: "json"
+        },
+        dataType: 'jsonp',
+        success: function(data) {
+          self.infoWindow = new google.maps.InfoWindow({
+            content: data.parse.text["*"]
+          });
 
-  self.infoWindow = new google.maps.InfoWindow({
-    content: contentString
-  });
+          self.mapMarker.addListener('click', function() {
+            self.infoWindow.open(map, self.mapMarker);
+          });
 
-  self.mapMarker.addListener('click', function() {
-    self.infoWindow.open(map, self.mapMarker);
-  });
+        }
+       })
+    }
+} );
 
 }
 
@@ -112,8 +125,6 @@ $(function(){
     {name: 'Google', lat: 37.427223, lng: -122.070993},
     {name: 'Twitter', lat: 37.382153, lng: -122.034223},
     {name: 'Facebook', lat: 37.485094, lng: -122.146364},
-    {name: 'Apple', lat: 37.386871, lng: -122.039083},
-    {name: 'Dropbox', lat: 37.776541, lng: -122.391627}
   ];
 
   vm = new AppViewModel(companies);
