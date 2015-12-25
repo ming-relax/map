@@ -94,6 +94,7 @@ function CompanyViewModel(company) {
 
       self.mapMarker.addListener('click', function() {
         self.infoWindow.open(map, self.mapMarker);
+        self.select();
       });
 
       self.infoWindow.addListener('closeclick', function() {
