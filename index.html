@@ -19,7 +19,7 @@
         <div class="input-group input-group-lg col-md-12 col-xs-12 dropdown">
           <input type="text" id="dropdownMenu1" class="form-control dropdown-toggle" data-bind="textInput: keyWord" data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false">
 
-          <ul class="dropdown-menu hidden-md" aria-labelledby="dropdownMenu1" data-bind="foreach: filteredCompanies">
+          <ul class="dropdown-menu hidden-md hidden-lg" aria-labelledby="dropdownMenu1" data-bind="foreach: filteredCompanies">
             <li id="location" data-bind="click: $parent.select, css: {selected : isSelected, 'list-group-item': true}">
               <span data-bind="text: $data.name"></span>
             </li>
