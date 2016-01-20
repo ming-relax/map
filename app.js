@@ -113,7 +113,7 @@ function CompanyViewModel(company) {
   queryData
   .then(parseData)
   .fail(function() {
-    alert("error")
+    alert("Oh, there is a network errror, please refresh the page!")
   })
 }
 
