@@ -10,24 +10,33 @@
     <link rel="stylesheet" href="style.css" media="screen" title="no title" charset="utf-8">
     <script src="jquery-2.1.4.min.js" charset="utf-8"></script>
     <script src="knockout-3.3.0.js" charset="utf-8"></script>
+    <script src="bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+
   </head>
   <body>
     <div class="container">
       <div class="row" id="search-bar">
-        <div class="input-group input-group-lg">
-          <span class="input-group-addon" id="basic-addon1">Search</span>
-          <input type="text" id="search-input" class="form-control" data-bind="textInput: keyWord">
+        <div class="input-group input-group-lg col-md-12 col-xs-12 dropdown">
+          <input type="text" id="dropdownMenu1" class="form-control dropdown-toggle" data-bind="textInput: keyWord" data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false">
+
+          <ul class="dropdown-menu hidden-md" aria-labelledby="dropdownMenu1" data-bind="foreach: filteredCompanies">
+            <li id="location" data-bind="click: $parent.select, css: {selected : isSelected, 'list-group-item': true}">
+              <span data-bind="text: $data.name"></span>
+            </li>
+          </ul>
+
         </div>
       </div>
       <div class="row" id="main">
-        <div class="col-md-3" id="location-list">
+        <div class="col-md-3 hidden-xs hidden-sm" id="location-list">
           <ul class="list-group" data-bind="foreach: filteredCompanies">
             <li id="location" data-bind="click: $parent.select, css: {selected : isSelected, 'list-group-item': true}">
               <span data-bind="text: $data.name"></span>
             </li>
           </ul>
         </div>
-        <div class="col-md-9" id="map">
+
+        <div class="col-md-9 col-xs-12" id="map">
         </div>
       </div>
     </div>

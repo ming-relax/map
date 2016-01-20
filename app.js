@@ -1,6 +1,8 @@
 function initMap() {
+  window.initLat = 37.3876
+  window.initLng = -122.0575
   window.map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: 37.3876, lng: -122.0575},
+    center: {lat: window.initLat, lng: window.initLng},
     zoom: 9
   });
 
@@ -34,12 +36,16 @@ function CompanyViewModel(company) {
   self.select = function() {
     self.isSelected(true);
     self.mapMarker.setMap(window.map);
+    self.mapMarker.setAnimation(google.maps.Animation.BOUNCE);
     self.infoWindow.open(map, self.mapMarker);
+    // window.map.setCenter({lat: self.lat, lng: self.lng});
   }
 
   self.unselect = function() {
     self.isSelected(false);
     // self.mapMarker.setMap(null);
+    self.mapMarker.setAnimation(null);
+    window.map.setCenter({lat: window.initLat, lng: window.initLng});
     if (self.infoWindow)
       self.infoWindow.close();
   }
@@ -71,13 +77,14 @@ function CompanyViewModel(company) {
   
 
   var parseData = function(data) {
-    console.log("going to parse data...")
     $.ajax({
       url: "https://en.wikipedia.org/w/api.php",
       data: {
         action: "parse",
         pageid: Object.keys(data.query.pages)[0],
-        contentmodel: "wikitext",
+        contentmodel: "text",
+        contentformat: "text/plain",
+        section: 0,
         prop: "text",
         disableeditsection: true,
         noimages: true,
@@ -87,8 +94,7 @@ function CompanyViewModel(company) {
       dataType: 'jsonp'
     }).
     done(function(data) {
-      console.log("parsed data is back..")
-
+      console.log(data);
       self.infoWindow = new google.maps.InfoWindow({
         content: data.parse.text["*"]});
 
